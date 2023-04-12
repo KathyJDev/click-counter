@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-clickcounter-staging-193858-authRole",
+      "UnauthRoleArn": "arn:aws:iam::393139739338:role/amplify-clickcounter-staging-193858-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::393139739338:role/amplify-clickcounter-staging-193858-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-clickcounter-staging-193858-deployment",
+      "UnauthRoleName": "amplify-clickcounter-staging-193858-unauthRole",
+      "StackName": "amplify-clickcounter-staging-193858",
+      "StackId": "arn:aws:cloudformation:us-east-1:393139739338:stack/amplify-clickcounter-staging-193858/8135d830-d8a0-11ed-872c-128975d5d4ab",
+      "AmplifyAppId": "d17zyspyjbmvlt"
+    }
+  }
+}
