@@ -15,14 +15,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ClickUpdateFormInputValues = {
     count?: number;
+    browserId?: string;
 };
 export declare type ClickUpdateFormValidationValues = {
     count?: ValidationFunction<number>;
+    browserId?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ClickUpdateFormOverridesProps = {
     ClickUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     count?: PrimitiveOverrideProps<TextFieldProps>;
+    browserId?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ClickUpdateFormProps = React.PropsWithChildren<{
     overrides?: ClickUpdateFormOverridesProps | undefined | null;

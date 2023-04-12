@@ -13,6 +13,7 @@ type EagerClick = {
   };
   readonly id: string;
   readonly count?: number | null;
+  readonly browserId?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -24,6 +25,7 @@ type LazyClick = {
   };
   readonly id: string;
   readonly count?: number | null;
+  readonly browserId?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

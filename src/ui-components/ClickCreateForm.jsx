@@ -24,15 +24,19 @@ export default function ClickCreateForm(props) {
   } = props;
   const initialValues = {
     count: "",
+    browserId: "",
   };
   const [count, setCount] = React.useState(initialValues.count);
+  const [browserId, setBrowserId] = React.useState(initialValues.browserId);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setCount(initialValues.count);
+    setBrowserId(initialValues.browserId);
     setErrors({});
   };
   const validations = {
     count: [],
+    browserId: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function ClickCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           count,
+          browserId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -120,6 +125,7 @@ export default function ClickCreateForm(props) {
           if (onChange) {
             const modelFields = {
               count: value,
+              browserId,
             };
             const result = onChange(modelFields);
             value = result?.count ?? value;
@@ -133,6 +139,31 @@ export default function ClickCreateForm(props) {
         errorMessage={errors.count?.errorMessage}
         hasError={errors.count?.hasError}
         {...getOverrideProps(overrides, "count")}
+      ></TextField>
+      <TextField
+        label="Browser id"
+        isRequired={false}
+        isReadOnly={false}
+        value={browserId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              count,
+              browserId: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.browserId ?? value;
+          }
+          if (errors.browserId?.hasError) {
+            runValidationTasks("browserId", value);
+          }
+          setBrowserId(value);
+        }}
+        onBlur={() => runValidationTasks("browserId", browserId)}
+        errorMessage={errors.browserId?.errorMessage}
+        hasError={errors.browserId?.hasError}
+        {...getOverrideProps(overrides, "browserId")}
       ></TextField>
       <Flex
         justifyContent="space-between"

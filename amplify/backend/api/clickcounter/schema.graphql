@@ -1,4 +1,6 @@
 type Click @model @auth(rules: [{allow: public}]) {
   id: ID!
   count: Int
+  browserId: String
 }
+ 

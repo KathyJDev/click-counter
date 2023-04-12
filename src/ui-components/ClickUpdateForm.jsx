@@ -25,14 +25,17 @@ export default function ClickUpdateForm(props) {
   } = props;
   const initialValues = {
     count: "",
+    browserId: "",
   };
   const [count, setCount] = React.useState(initialValues.count);
+  const [browserId, setBrowserId] = React.useState(initialValues.browserId);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = clickRecord
       ? { ...initialValues, ...clickRecord }
       : initialValues;
     setCount(cleanValues.count);
+    setBrowserId(cleanValues.browserId);
     setErrors({});
   };
   const [clickRecord, setClickRecord] = React.useState(clickModelProp);
@@ -48,6 +51,7 @@ export default function ClickUpdateForm(props) {
   React.useEffect(resetStateValues, [clickRecord]);
   const validations = {
     count: [],
+    browserId: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -76,6 +80,7 @@ export default function ClickUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           count,
+          browserId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -136,6 +141,7 @@ export default function ClickUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               count: value,
+              browserId,
             };
             const result = onChange(modelFields);
             value = result?.count ?? value;
@@ -149,6 +155,31 @@ export default function ClickUpdateForm(props) {
         errorMessage={errors.count?.errorMessage}
         hasError={errors.count?.hasError}
         {...getOverrideProps(overrides, "count")}
+      ></TextField>
+      <TextField
+        label="Browser id"
+        isRequired={false}
+        isReadOnly={false}
+        value={browserId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              count,
+              browserId: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.browserId ?? value;
+          }
+          if (errors.browserId?.hasError) {
+            runValidationTasks("browserId", value);
+          }
+          setBrowserId(value);
+        }}
+        onBlur={() => runValidationTasks("browserId", browserId)}
+        errorMessage={errors.browserId?.errorMessage}
+        hasError={errors.browserId?.hasError}
+        {...getOverrideProps(overrides, "browserId")}
       ></TextField>
       <Flex
         justifyContent="space-between"

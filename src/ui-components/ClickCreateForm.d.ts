@@ -14,14 +14,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ClickCreateFormInputValues = {
     count?: number;
+    browserId?: string;
 };
 export declare type ClickCreateFormValidationValues = {
     count?: ValidationFunction<number>;
+    browserId?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ClickCreateFormOverridesProps = {
     ClickCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     count?: PrimitiveOverrideProps<TextFieldProps>;
+    browserId?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ClickCreateFormProps = React.PropsWithChildren<{
     overrides?: ClickCreateFormOverridesProps | undefined | null;
