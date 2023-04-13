@@ -1,13 +1,15 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { DataStore } from 'aws-amplify';
-import { Click } from './models';
 import { v4 as uuidv4 } from 'uuid';
+import MapChart from "./MapChart";
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from './firebase-config';
 
 function App() {
   const [clickCount, setClickCount] = useState(0);
   const [browserId, setBrowserId] = useState(localStorage.getItem('browserId') || null);
   const id = browserId || uuidv4();
+  const clickCollectionRef = collection(db, "Click");
 
   useEffect(() => {
     if (!browserId) {
@@ -16,9 +18,10 @@ function App() {
     }
 
     async function fetchClickCount() {
-      const clicks = await DataStore.query(Click, c => c.browserId.eq(browserId));
-      if (clicks.length > 0) {
-        setClickCount(clicks[0].count);
+      const clickDocRef = doc(clickCollectionRef, browserId);
+      const clickDoc = await getDoc(clickDocRef);
+      if (clickDoc.exists()) {
+        setClickCount(clickDoc.data().count);
       }
     }
     fetchClickCount();
@@ -29,16 +32,13 @@ function App() {
       return;
     }
 
-    const click = await DataStore.query(Click, c => c.browserId.eq(browserId));
-    if (click.length > 0) {
-      const updatedClick = Click.copyOf(click[0], updated => {
-        updated.count = clickCount + 1;
-      });
-      await DataStore.save(updatedClick);
+    const clickDocRef = doc(clickCollectionRef, browserId);
+    const clickDoc = await getDoc(clickDocRef);
+    if (clickDoc.exists()) {
+      await updateDoc(clickDocRef, { count: clickCount + 1 });
       setClickCount(clickCount + 1);
     } else {
-      const newClick = new Click({ count: 1, browserId: browserId });
-      await DataStore.save(newClick);
+      await setDoc(clickDocRef, { count: 1, browserId: browserId });
       setClickCount(1);
     }
   };
@@ -50,6 +50,7 @@ function App() {
       <button className='rounded-button' onClick={handleClick}>
         +
       </button>
+      <MapChart />
     </div>
   );
 }
