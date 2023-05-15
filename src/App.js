@@ -25,7 +25,7 @@ function App() {
       }
     }
     fetchClickCount();
-  }, [browserId, id]);
+  }, [browserId, id, clickCollectionRef]);
 
   const handleClick = async () => {
     if (!browserId) {
