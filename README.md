@@ -7,3 +7,5 @@ This project was made as a submission in the Lighthall Software Engineering Supe
 ![click-counter](https://github.com/KathyJDev/click-counter/assets/65245095/899919ff-751e-46cf-91e9-60418dc0f88d)
 
 Link: https://click-counter-umber.vercel.app/
+
+Built with React and Firebase
