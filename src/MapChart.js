@@ -19,16 +19,12 @@ const getClicksByCountry = async () => {
 
   for (const doc of querySnapshot.docs) {
     const click = doc.data();
-    const { count } = click;
+    const { count, country } = click;
 
-    const request = await fetch("https://ipinfo.io/json?token=57f732a0f50583")
-    const jsonResponse = await request.json()
-    const country_abbreviation = jsonResponse.country;
-
-    if (country_abbreviation in clicksByCountry) {
-      clicksByCountry[country_abbreviation] += count;
+    if (country in clicksByCountry) {
+      clicksByCountry[country] += count;
     } else {
-      clicksByCountry[country_abbreviation] = count;
+      clicksByCountry[country] = count;
     }
   }
 

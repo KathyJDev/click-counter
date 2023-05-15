@@ -34,11 +34,15 @@ function App() {
 
     const clickDocRef = doc(clickCollectionRef, browserId);
     const clickDoc = await getDoc(clickDocRef);
+    const ipInfoResponse = await fetch(`https://ipinfo.io/json?token=${process.env.REACT_APP_IPINFO_TOKEN}`);
+    const ipInfoData = await ipInfoResponse.json();
+    const countryAbbreviation = ipInfoData.country;
+  
     if (clickDoc.exists()) {
-      await updateDoc(clickDocRef, { count: clickCount + 1 });
+      await updateDoc(clickDocRef, { count: clickCount + 1, country: countryAbbreviation });
       setClickCount(clickCount + 1);
     } else {
-      await setDoc(clickDocRef, { count: 1, browserId: browserId });
+      await setDoc(clickDocRef, { count: 1, browserId: browserId, country: countryAbbreviation });
       setClickCount(1);
     }
   };
